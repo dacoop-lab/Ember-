@@ -1,0 +1,120 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+import { createProfile } from '@/app/actions/createProfile'
+
+export default function SignupPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+
+    const supabase = createClient()
+    const { data, error: authError } = await supabase.auth.signUp({ email, password })
+
+    if (authError) {
+      setError(authError.message)
+      setLoading(false)
+      return
+    }
+
+    if (data.user) {
+      const { error: profileError } = await createProfile(data.user.id, name)
+
+      if (profileError) {
+        setError(profileError)
+        setLoading(false)
+        return
+      }
+
+      router.push('/onboarding/profile')
+    }
+  }
+
+  return (
+    <div className="flex min-h-dvh flex-col justify-center px-6 py-12">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-bold tracking-tight text-ember-400">ember</h1>
+        <p className="mt-2 text-base text-ember-200/60">Create your account</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-1.5">
+            First name
+          </label>
+          <input
+            id="name"
+            type="text"
+            autoComplete="given-name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+            placeholder="Your name"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-1.5">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-1.5">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            required
+            minLength={8}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+            placeholder="Min. 8 characters"
+          />
+        </div>
+
+        {error && <p className="text-sm text-red-400">{error}</p>}
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full rounded-xl bg-ember-500 py-4 text-base font-semibold text-white tracking-wide hover:bg-ember-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mt-2"
+        >
+          {loading ? 'Creating account…' : 'Create account'}
+        </button>
+      </form>
+
+      <p className="mt-8 text-center text-sm text-ember-200/50">
+        Already a member?{' '}
+        <Link href="/login" className="text-ember-300 hover:text-ember-200 transition-colors">
+          Sign in
+        </Link>
+      </p>
+    </div>
+  )
+}
