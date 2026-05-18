@@ -21,8 +21,13 @@ export async function createProfile(id: string, name: string): Promise<{ error: 
     )
 
     const { error } = await Promise.race([upsertPromise, timeout])
-    return { error: error?.message ?? null }
+    if (error) {
+      console.error('[createProfile] upsert error:', error)
+      return { error: error.message }
+    }
+    return { error: null }
   } catch (err) {
-    return { error: err instanceof Error ? err.message : 'Something went wrong' }
+    console.error('[createProfile] caught exception:', err)
+    return { error: err instanceof Error ? err.message : String(err) }
   }
 }

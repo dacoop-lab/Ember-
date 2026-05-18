@@ -37,7 +37,7 @@ export default function SignupPage() {
 
       try {
         const clientTimeout = new Promise<{ error: string }>(
-          (resolve) => setTimeout(() => resolve({ error: 'Something went wrong, please try again.' }), 10_000),
+          (resolve) => setTimeout(() => resolve({ error: 'Profile creation timed out — please try again.' }), 10_000),
         )
         const result = await Promise.race([createProfile(data.user.id, name), clientTimeout])
 
@@ -46,8 +46,8 @@ export default function SignupPage() {
           setLoading(false)
           return
         }
-      } catch {
-        setError('Something went wrong, please try again.')
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err))
         setLoading(false)
         return
       }
