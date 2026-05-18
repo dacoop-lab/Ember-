@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { SwipeStack } from '@/components/cards/SwipeStack'
 import { MatchModal } from '@/components/cards/MatchModal'
@@ -15,6 +16,7 @@ interface PendingMatch {
 }
 
 export default function DiscoverPage() {
+  const router = useRouter()
   const [candidates, setCandidates] = useState<CandidateWithPhotos[]>([])
   const [loading, setLoading] = useState(true)
   const [empty, setEmpty] = useState(false)
@@ -27,6 +29,14 @@ export default function DiscoverPage() {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', user.id)
+        .maybeSingle()
+
+      if (!profile) { router.push('/onboarding/profile'); return }
 
       setCurrentUserId(user.id)
 

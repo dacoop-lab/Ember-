@@ -41,6 +41,18 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/discover', request.url))
   }
 
+  if (user && isAppRoute) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', user.id)
+      .maybeSingle()
+
+    if (!profile) {
+      return NextResponse.redirect(new URL('/onboarding/profile', request.url))
+    }
+  }
+
   return supabaseResponse
 }
 
