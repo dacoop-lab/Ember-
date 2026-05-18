@@ -40,7 +40,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-dvh flex-col justify-center px-6 py-12">
       <div className="mb-10 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-ember-400">ember</h1>
+        <img src="/logo.png" alt="Ember" className="h-16 w-auto mx-auto mb-2" />
         <p className="mt-2 text-base text-ember-200/60">Welcome back</p>
       </div>
 
