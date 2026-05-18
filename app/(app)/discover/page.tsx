@@ -103,7 +103,7 @@ export default function DiscoverPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center" style={{ height: 'calc(100dvh - var(--nav-height))' }}>
-        <div className="w-8 h-8 rounded-full border-2 border-ember-400 border-t-transparent animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#C8553D] border-t-transparent animate-spin" />
       </div>
     )
   }
@@ -112,8 +112,8 @@ export default function DiscoverPage() {
     return (
       <div className="flex flex-col items-center justify-center gap-3 px-8 text-center" style={{ height: 'calc(100dvh - var(--nav-height))' }}>
         <span className="text-5xl">🔥</span>
-        <p className="text-lg font-semibold text-ember-50">You&apos;ve seen everyone</p>
-        <p className="text-sm text-ember-200/50">Check back soon</p>
+        <p className="text-lg font-semibold text-[#F5E6DC]">You&apos;ve seen everyone</p>
+        <p className="text-sm text-[#8A6858]">Check back soon</p>
       </div>
     )
   }
@@ -123,12 +123,20 @@ export default function DiscoverPage() {
       className="flex flex-col"
       style={{ height: 'calc(100dvh - var(--nav-height))', paddingTop: 'max(48px, var(--safe-top))' }}
     >
-      {/* Header */}
-      <div className="shrink-0 px-4 pb-3">
-        <h1 className="text-2xl font-bold tracking-tight text-ember-400">ember</h1>
+      {/* Header: logo left, notifications right */}
+      <div className="shrink-0 flex items-center justify-between px-4 pb-3">
+        <img src="/logo-clean.png" alt="Ember" className="h-8 w-auto" />
+        <button
+          className="w-10 h-10 flex items-center justify-center text-[#4A1208] hover:text-[#C8553D] transition-colors"
+          aria-label="Notifications"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+        </button>
       </div>
 
-      {/* Card stack — fills remaining height */}
+      {/* Card stack */}
       <div className="flex-1 flex flex-col items-center px-4 pb-4 min-h-0 w-full">
         {currentUserId && candidates.length > 0 && (
           <SwipeStack

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -63,8 +63,8 @@ export default function OnboardingProfilePage() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col flex-1 gap-5">
       <div>
-        <h2 className="text-2xl font-semibold text-ember-50">Tell us about yourself</h2>
-        <p className="mt-1 text-sm text-ember-200/50">This appears on your profile.</p>
+        <h2 className="text-2xl font-semibold text-[#F5E6DC]">Tell us about yourself</h2>
+        <p className="mt-1 text-sm text-[#8A6858]">This appears on your profile.</p>
       </div>
 
       <div className="flex flex-col gap-4">
@@ -79,7 +79,7 @@ export default function OnboardingProfilePage() {
             autoComplete="given-name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+            className="w-full rounded-xl bg-[#1A1410] border border-ember-800/50 px-4 py-3.5 text-base text-[#F5E6DC] placeholder:text-[#F5E6DC]/20 focus:outline-none focus:border-ember-500 transition-colors"
             placeholder="Your name"
           />
         </div>
@@ -96,7 +96,7 @@ export default function OnboardingProfilePage() {
             required
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+            className="w-full rounded-xl bg-[#1A1410] border border-ember-800/50 px-4 py-3.5 text-base text-[#F5E6DC] placeholder:text-[#F5E6DC]/20 focus:outline-none focus:border-ember-500 transition-colors"
             placeholder="Your age"
           />
         </div>
@@ -111,7 +111,7 @@ export default function OnboardingProfilePage() {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             maxLength={300}
-            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors resize-none"
+            className="w-full rounded-xl bg-[#1A1410] border border-ember-800/50 px-4 py-3.5 text-base text-[#F5E6DC] placeholder:text-[#F5E6DC]/20 focus:outline-none focus:border-ember-500 transition-colors resize-none"
             placeholder="A few words about you…"
           />
           <p className="mt-1 text-right text-xs text-ember-200/30">{bio.length}/300</p>
@@ -124,7 +124,8 @@ export default function OnboardingProfilePage() {
         <button
           type="submit"
           disabled={loading || !canContinue}
-          className="w-full rounded-xl bg-ember-500 py-4 text-base font-semibold text-white tracking-wide hover:bg-ember-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-xl py-4 text-base font-semibold text-white tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
+          style={{ background: 'linear-gradient(to right, #C8553D, #E8845C)' }}
         >
           {loading ? 'Saving…' : 'Continue'}
         </button>

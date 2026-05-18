@@ -22,7 +22,7 @@ interface SwipeCardProps {
 
 const THRESHOLD = 100
 const STACK_SCALE = [1, 0.95, 0.90] as const
-const STACK_Y     = [0, 8, 16] as const
+const STACK_Y     = [0, 10, 20] as const
 
 const SPRING_SNAP = { tension: 300, friction: 20 }
 const SPRING_EXIT = { tension: 220, friction: 28 }
@@ -82,7 +82,7 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(function Sw
         x,
         rotate: rot,
         scale: STACK_SCALE[stackIndex] ?? 0.90,
-        y: STACK_Y[stackIndex] ?? 16,
+        y: STACK_Y[stackIndex] ?? 20,
         touchAction: 'none',
         position: 'absolute',
         inset: 0,
@@ -92,7 +92,8 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(function Sw
         willChange: 'transform',
       }}
     >
-      <div className="relative w-full h-full rounded-3xl overflow-hidden bg-charcoal-800 select-none shadow-2xl">
+      <div className="relative w-full h-full rounded-3xl overflow-hidden select-none shadow-2xl">
+        {/* Background: photo or warm gradient fallback */}
         {photoUrl ? (
           <img
             src={photoUrl}
@@ -101,49 +102,56 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(function Sw
             draggable={false}
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-ember-900/30">
-            <span className="text-7xl text-ember-200/10">♥</span>
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(to bottom, #2A0A03, #1A1410)' }}
+          />
+        )}
+
+        {/* Bottom gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+        {/* Identity badge — top right */}
+        {identityLabel && (
+          <div className="absolute top-4 right-4 text-xs font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-[#C8553D] text-white">
+            {identityLabel}
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-
+        {/* LIKE stamp */}
         {isTop && (
           <animated.div
             style={{ opacity: likeOpacity }}
-            className="absolute top-8 left-6 rotate-[-18deg] border-4 border-green-400 rounded-xl px-3 py-1.5 pointer-events-none"
+            className="absolute top-8 left-6 rotate-[-18deg] border-4 border-[#E8A598] rounded-xl px-3 py-1.5 pointer-events-none"
           >
-            <span className="text-green-400 text-xl font-black tracking-[0.2em] flex items-center gap-1.5">
+            <span className="text-[#E8A598] text-xl font-black tracking-[0.2em] flex items-center gap-1.5">
               <span>♥</span><span>LIKE</span>
             </span>
           </animated.div>
         )}
 
+        {/* PASS stamp */}
         {isTop && (
           <animated.div
             style={{ opacity: passOpacity }}
-            className="absolute top-8 right-6 rotate-[18deg] border-4 border-red-400 rounded-xl px-3 py-1.5 pointer-events-none"
+            className="absolute top-8 right-6 rotate-[18deg] border-4 border-white/70 rounded-xl px-3 py-1.5 pointer-events-none"
           >
-            <span className="text-red-400 text-xl font-black tracking-[0.2em] flex items-center gap-1.5">
+            <span className="text-white text-xl font-black tracking-[0.2em] flex items-center gap-1.5">
               <span>✕</span><span>PASS</span>
             </span>
           </animated.div>
         )}
 
+        {/* Profile info */}
         <div className="absolute bottom-0 left-0 right-0 p-5">
           <div className="flex items-end gap-2 flex-wrap">
             <h3 className="text-2xl font-bold text-white leading-none">{profile.name}</h3>
             {profile.age != null && (
-              <span className="text-xl text-white/65 leading-none mb-px">{profile.age}</span>
-            )}
-            {identityLabel && (
-              <span className="ml-auto text-xs font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-ember-500/70 text-ember-50">
-                {identityLabel}
-              </span>
+              <span className="text-xl text-white/70 leading-none mb-px">{profile.age}</span>
             )}
           </div>
           {profile.city && (
-            <p className="text-sm text-white/55 mt-1">{profile.city}</p>
+            <p className="text-sm text-white/70 mt-1">{profile.city}</p>
           )}
         </div>
       </div>

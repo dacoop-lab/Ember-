@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
+const inputClass = 'w-full rounded-xl bg-[#1A1410] border border-[#4A1208] focus:border-[#C8553D] px-4 py-4 text-base text-[#F5E6DC] placeholder:text-[#4A1208] focus:outline-none transition-colors'
+const labelClass = 'block text-sm font-medium tracking-widest uppercase text-[#8A6858] mb-2'
+
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -40,15 +43,20 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-dvh flex-col justify-center px-6 py-12">
       <div className="mb-10 text-center">
-        <img src="/logo.png" alt="Ember" className="h-16 w-auto mx-auto mb-2" />
-        <p className="mt-2 text-base text-ember-200/60">Welcome back</p>
+        <div className="relative inline-flex justify-center mb-4">
+          <div
+            className="absolute inset-0 rounded-full scale-150"
+            style={{ background: 'radial-gradient(ellipse at center, #C8553D20 0%, transparent 70%)' }}
+          />
+          <img src="/logo-clean.png" alt="Ember" className="h-20 w-auto relative" />
+        </div>
+        <h1 className="text-2xl font-semibold text-[#F5E6DC] mt-2">Welcome back</h1>
+        <p className="mt-1 text-sm text-[#8A6858]">Sign in to continue</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-1.5">
-            Email
-          </label>
+          <label htmlFor="email" className={labelClass}>Email</label>
           <input
             id="email"
             type="email"
@@ -56,15 +64,13 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+            className={inputClass}
             placeholder="you@example.com"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-1.5">
-            Password
-          </label>
+          <label htmlFor="password" className={labelClass}>Password</label>
           <input
             id="password"
             type="password"
@@ -72,7 +78,7 @@ export default function LoginPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+            className={inputClass}
             placeholder="••••••••"
           />
         </div>
@@ -82,15 +88,16 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-ember-500 py-4 text-base font-semibold text-white tracking-wide hover:bg-ember-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mt-2"
+          className="w-full rounded-xl py-4 text-base font-semibold text-white tracking-wide disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90 mt-2"
+          style={{ background: 'linear-gradient(to right, #C8553D, #E8845C)' }}
         >
           {loading ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
 
-      <p className="mt-8 text-center text-sm text-ember-200/50">
+      <p className="mt-8 text-center text-sm text-[#8A6858]">
         No account?{' '}
-        <Link href="/signup" className="text-ember-300 hover:text-ember-200 transition-colors">
+        <Link href="/signup" className="text-[#C8553D] hover:text-[#E8845C] transition-colors font-medium">
           Create one
         </Link>
       </p>

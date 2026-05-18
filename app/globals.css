@@ -1,22 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ember-50: #FDF6F0;
-  --color-ember-100: #FAE8D8;
-  --color-ember-200: #F4C9A0;
-  --color-ember-300: #ECA060;
-  --color-ember-400: #E07830;
-  --color-ember-500: #C45E1A;
-  --color-ember-600: #9E4610;
-  --color-ember-700: #7A3209;
-  --color-ember-800: #552104;
-  --color-ember-900: #2E1002;
-  --color-charcoal-800: #1C1A18;
-  --color-charcoal-900: #111009;
+  --color-ember-50:  #FDF0EB;
+  --color-ember-100: #F9D5C5;
+  --color-ember-200: #F2B49A;
+  --color-ember-300: #E8845C;
+  --color-ember-400: #C8553D;
+  --color-ember-500: #A8402A;
+  --color-ember-600: #8A2E1C;
+  --color-ember-700: #6E1F10;
+  --color-ember-800: #4A1208;
+  --color-ember-900: #2A0A03;
+
+  --color-rose:      #E8A598;
+  --color-rose-dark: #C4756A;
+
+  --color-bg-primary: #0D0A08;
+  --color-bg-surface: #1A1410;
+  --color-bg-card:    #221810;
+
+  --color-text-primary: #F5E6DC;
+  --color-text-muted:   #C4A898;
+  --color-text-faint:   #8A6858;
 }
 
 :root {
-  /* nav-height = 64px buttons + device home indicator */
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-top: env(safe-area-inset-top, 0px);
   --nav-height: calc(4rem + var(--safe-bottom));
@@ -27,8 +35,8 @@ html {
 }
 
 body {
-  background-color: #1C1A18; /* charcoal-800 desktop frame */
-  color: #FDF6F0;
+  background-color: #1A1410;
+  color: #F5E6DC;
   font-family: system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

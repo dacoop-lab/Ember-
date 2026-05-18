@@ -16,8 +16,7 @@ interface ConversationEntry {
 function formatTimestamp(iso: string): string {
   const date = new Date(iso)
   const now = new Date()
-  const diffMs = now.getTime() - date.getTime()
-  const diffDays = Math.floor(diffMs / 86_400_000)
+  const diffDays = Math.floor((now.getTime() - date.getTime()) / 86_400_000)
 
   if (diffDays === 0) return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
   if (diffDays < 7)  return date.toLocaleDateString([], { weekday: 'short' })
@@ -26,15 +25,15 @@ function formatTimestamp(iso: string): string {
 
 function SkeletonList() {
   return (
-    <div className="divide-y divide-ember-900/60">
+    <div>
       {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className="flex items-center gap-3 py-4">
-          <div className="w-14 h-14 rounded-full bg-charcoal-800 animate-pulse shrink-0" />
+        <div key={i} className="flex items-center gap-3 py-4 px-4 border-b border-[#1A1410]">
+          <div className="w-14 h-14 rounded-full bg-[#1A1410] animate-pulse shrink-0" />
           <div className="flex-1 space-y-2">
-            <div className="h-3.5 bg-charcoal-800 animate-pulse rounded-full w-28" />
-            <div className="h-3 bg-charcoal-800 animate-pulse rounded-full w-44" />
+            <div className="h-3.5 bg-[#1A1410] animate-pulse rounded-full w-28" />
+            <div className="h-3 bg-[#1A1410] animate-pulse rounded-full w-44" />
           </div>
-          <div className="h-3 bg-charcoal-800 animate-pulse rounded-full w-10 shrink-0" />
+          <div className="h-3 bg-[#1A1410] animate-pulse rounded-full w-10 shrink-0" />
         </div>
       ))}
     </div>
@@ -97,19 +96,19 @@ export default function MessagesPage() {
   }, [])
 
   return (
-    <div className="px-4 pb-24" style={{ paddingTop: 'max(48px, var(--safe-top))' }}>
-      <h1 className="text-xl font-semibold text-ember-50 mb-6">Messages</h1>
+    <div className="pb-24" style={{ paddingTop: 'max(48px, var(--safe-top))' }}>
+      <h1 className="text-xl font-semibold text-[#F5E6DC] mb-2 px-4">Messages</h1>
 
       {loading ? (
         <SkeletonList />
       ) : conversations.length === 0 ? (
-        <div className="flex flex-col items-center justify-center pt-24 gap-3 text-center">
+        <div className="flex flex-col items-center justify-center pt-24 gap-3 text-center px-4">
           <span className="text-5xl">💬</span>
-          <p className="text-lg font-semibold text-ember-50">No conversations yet</p>
-          <p className="text-sm text-ember-200/50">Match with someone to start chatting</p>
+          <p className="text-lg font-semibold text-[#F5E6DC]">No conversations yet</p>
+          <p className="text-sm text-[#8A6858]">Match with someone to start chatting</p>
         </div>
       ) : (
-        <div className="divide-y divide-ember-900/60">
+        <div>
           {conversations.map(({ matchId, profile, photoUrl, lastMessage }) => {
             const isUnread =
               lastMessage !== null &&
@@ -120,31 +119,31 @@ export default function MessagesPage() {
               <Link
                 key={matchId}
                 href={`/messages/${matchId}`}
-                className="flex items-center gap-3 py-4 -mx-1 px-1 rounded-xl hover:bg-charcoal-800/40 transition-colors"
+                className="flex items-center gap-3 py-4 px-4 border-b border-[#1A1410] hover:bg-[#1A1410]/40 transition-colors"
               >
-                <div className="w-14 h-14 rounded-full overflow-hidden bg-charcoal-800 shrink-0">
+                <div className="w-14 h-14 rounded-full overflow-hidden bg-[#221810] shrink-0">
                   {photoUrl ? (
                     <img src={photoUrl} alt={profile.name} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-ember-200/20 text-xl">♥</div>
+                    <div className="w-full h-full flex items-center justify-center text-[#4A1208] text-xl">♥</div>
                   )}
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <p className={`text-base leading-snug truncate ${isUnread ? 'font-semibold text-ember-400' : 'font-medium text-ember-50'}`}>
+                  <p className={`text-base leading-snug truncate ${isUnread ? 'font-semibold text-[#C8553D]' : 'font-semibold text-[#F5E6DC]'}`}>
                     {profile.name}
                   </p>
                   {lastMessage ? (
-                    <p className={`text-sm truncate mt-0.5 ${isUnread ? 'font-medium text-ember-200/80' : 'text-ember-200/45'}`}>
+                    <p className={`text-sm truncate mt-0.5 ${isUnread ? 'font-medium text-[#C4A898]' : 'text-[#8A6858]'}`}>
                       {lastMessage.content}
                     </p>
                   ) : (
-                    <p className="text-sm text-ember-400/50 italic mt-0.5">Say hello!</p>
+                    <p className="text-sm text-[#C8553D]/60 italic mt-0.5">Say hello!</p>
                   )}
                 </div>
 
                 {lastMessage && (
-                  <span className="text-sm text-ember-200/35 shrink-0 self-start mt-0.5">
+                  <span className="text-xs text-[#8A6858] shrink-0 self-start mt-0.5">
                     {formatTimestamp(lastMessage.created_at)}
                   </span>
                 )}

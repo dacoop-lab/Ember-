@@ -1,4 +1,4 @@
-interface StepHeaderProps {
+﻿interface StepHeaderProps {
   step: number
   total: number
   title: string
@@ -18,7 +18,7 @@ export function StepHeader({ step, total, title, subtitle }: StepHeaderProps) {
           />
         ))}
       </div>
-      <h2 className="text-2xl font-semibold text-ember-50">{title}</h2>
+      <h2 className="text-2xl font-semibold text-[#F5E6DC]">{title}</h2>
       {subtitle && <p className="mt-1.5 text-sm text-ember-200/60">{subtitle}</p>}
     </div>
   )

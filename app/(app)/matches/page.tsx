@@ -16,7 +16,7 @@ function SkeletonGrid() {
   return (
     <div className="grid grid-cols-2 gap-3">
       {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="rounded-2xl bg-charcoal-800 animate-pulse" style={{ aspectRatio: '3 / 4' }} />
+        <div key={i} className="rounded-2xl bg-[#1A1410] animate-pulse" style={{ aspectRatio: '3 / 4' }} />
       ))}
     </div>
   )
@@ -69,15 +69,15 @@ export default function MatchesPage() {
 
   return (
     <div className="px-4 pb-24" style={{ paddingTop: 'max(48px, var(--safe-top))' }}>
-      <h1 className="text-xl font-semibold text-ember-50 mb-6">Matches</h1>
+      <h1 className="text-xl font-semibold text-[#F5E6DC] mb-6">Matches</h1>
 
       {loading ? (
         <SkeletonGrid />
       ) : matches.length === 0 ? (
         <div className="flex flex-col items-center justify-center pt-24 gap-3 text-center">
           <span className="text-5xl">♥</span>
-          <p className="text-lg font-semibold text-ember-50">No matches yet</p>
-          <p className="text-sm text-ember-200/50">Keep swiping to find your ember</p>
+          <p className="text-lg font-semibold text-[#F5E6DC]">No matches yet</p>
+          <p className="text-sm text-[#8A6858]">Keep swiping to find your ember</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-3">
@@ -85,21 +85,23 @@ export default function MatchesPage() {
             <Link
               key={matchId}
               href={`/messages/${matchId}`}
-              className="relative rounded-2xl overflow-hidden bg-charcoal-800 block"
+              className="relative rounded-2xl overflow-hidden bg-[#221810] block"
               style={{ aspectRatio: '3 / 4' }}
             >
               {photoUrl ? (
                 <img src={photoUrl} alt={profile.name} className="absolute inset-0 w-full h-full object-cover" />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-4xl text-ember-200/20">♥</span>
-                </div>
+                <div
+                  className="absolute inset-0"
+                  style={{ background: 'linear-gradient(to bottom, #2A0A03, #1A1410)' }}
+                />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+              {/* Strong gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-3">
-                <p className="font-semibold text-white text-sm leading-tight">{profile.name}</p>
+                <p className="font-bold text-base text-white leading-tight">{profile.name}</p>
                 {profile.city && (
-                  <p className="text-xs text-white/55 mt-0.5">{profile.city}</p>
+                  <p className="text-xs text-white/60 mt-0.5">{profile.city}</p>
                 )}
               </div>
             </Link>

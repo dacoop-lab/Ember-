@@ -48,7 +48,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-charcoal-900 border-t border-ember-900/60"
+      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-[#0D0A08] border-t border-[#1A1410]"
       style={{ paddingBottom: 'var(--safe-bottom)' }}
     >
       <div className="flex h-16">
@@ -58,12 +58,13 @@ export function BottomNav() {
             <Link
               key={tab.href}
               href={tab.href}
-              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${
-                active ? 'text-ember-400' : 'text-ember-50/40'
+              style={active ? { filter: 'drop-shadow(0 0 6px #C8553D80)' } : undefined}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all ${
+                active ? 'text-[#C8553D]' : 'text-[#4A1208]'
               }`}
             >
               {tab.icon(active)}
-              <span className="text-xs font-medium tracking-wide leading-none">{tab.label}</span>
+              <span className="text-[10px] font-medium tracking-wide leading-none">{tab.label}</span>
             </Link>
           )
         })}

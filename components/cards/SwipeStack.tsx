@@ -38,13 +38,13 @@ function CircleButton({
 
   return (
     <animated.button
-      style={{ scale }}
+      style={{
+        scale,
+        background: variant === 'like' ? '#C8553D' : '#2A0A03',
+        border: variant === 'like' ? 'none' : '1px solid rgba(200,85,61,0.4)',
+      }}
       onClick={handleClick}
-      className={`w-16 h-16 rounded-full flex items-center justify-center text-xl shadow-lg transition-colors ${
-        variant === 'pass'
-          ? 'bg-charcoal-800 border-2 border-red-500/30 hover:border-red-400/70 text-red-400'
-          : 'bg-charcoal-800 border-2 border-ember-500/30 hover:border-ember-400/70 text-ember-300'
-      }`}
+      className="w-16 h-16 rounded-full flex items-center justify-center text-xl shadow-lg text-white"
       aria-label={variant === 'pass' ? 'Pass' : 'Like'}
     >
       {children}
@@ -98,7 +98,7 @@ export function SwipeStack({ candidates, currentUserId, onMatch, onEmpty }: Swip
 
   return (
     <div className="flex flex-col items-center gap-4 w-full h-full">
-      {/* Card area — fills all available height */}
+      {/* Card area */}
       <div className="relative flex-1 w-full max-w-[380px] min-h-0">
         {[...visible].reverse().map((candidate, reversedIdx) => {
           const stackIndex = visible.length - 1 - reversedIdx

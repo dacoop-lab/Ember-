@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { getPhotoUrl } from '@/lib/photos'
@@ -18,8 +17,8 @@ function fileToBase64(file: File): Promise<string> {
   })
 }
 
-const inputClass = 'w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors'
-const labelClass = 'block text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-1.5'
+const inputClass = 'w-full rounded-xl bg-[#1A1410] border border-[#2A0A03] focus:border-[#C8553D] px-4 py-3.5 text-base text-[#F5E6DC] placeholder:text-[#4A1208] focus:outline-none transition-colors'
+const labelClass = 'block text-xs font-medium tracking-widest uppercase text-[#8A6858] mb-1.5'
 
 export default function ProfilePage() {
   const router = useRouter()
@@ -132,21 +131,43 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-8 h-8 rounded-full border-2 border-ember-400 border-t-transparent animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#C8553D] border-t-transparent animate-spin" />
       </div>
     )
   }
 
+  const primaryPhoto = photos.find((p) => p.display_order === 0) ?? photos[0]
+  const avatarUrl = primaryPhoto ? getPhotoUrl(primaryPhoto.storage_path) : null
+  const identityLabel = profile?.identity === 'redhead' ? 'Redhead' : profile?.identity === 'admirer' ? 'Admirer' : null
+
   return (
     <div className="px-4 pb-24" style={{ paddingTop: 'max(48px, var(--safe-top))' }}>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-semibold text-ember-50">Profile</h1>
+      {/* Header row */}
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-xl font-semibold text-[#F5E6DC]">Profile</h1>
         <button
           onClick={handleSignOut}
-          className="text-sm text-ember-300/60 hover:text-ember-300 transition-colors"
+          className="text-sm text-[#8A6858] hover:text-[#C4A898] transition-colors"
         >
           Sign out
         </button>
+      </div>
+
+      {/* Avatar + name + badge */}
+      <div className="flex flex-col items-center mb-8">
+        <div className="w-24 h-24 rounded-full overflow-hidden bg-[#221810] mb-3 ring-2 ring-[#2A0A03]">
+          {avatarUrl ? (
+            <img src={avatarUrl} alt={profile?.name ?? ''} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-[#4A1208] text-3xl">♥</div>
+          )}
+        </div>
+        <h2 className="text-xl font-bold text-[#F5E6DC]">{profile?.name}</h2>
+        {identityLabel && (
+          <span className="mt-1.5 text-xs font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-[#C8553D] text-white">
+            {identityLabel}
+          </span>
+        )}
       </div>
 
       {/* Edit form */}
@@ -198,24 +219,25 @@ export default function ProfilePage() {
         </div>
 
         {saveError && <p className="text-sm text-red-400">{saveError}</p>}
-        {saveSuccess && <p className="text-sm text-green-400">Saved!</p>}
+        {saveSuccess && <p className="text-sm text-[#E8A598]">Saved!</p>}
 
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full rounded-xl bg-ember-500 py-3.5 text-sm font-semibold text-white tracking-wide hover:bg-ember-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-xl py-4 text-base font-semibold text-white tracking-wide disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
+          style={{ background: 'linear-gradient(to right, #C8553D, #E8845C)' }}
         >
-          {saving ? 'Saving…' : 'Save'}
+          {saving ? 'Saving…' : 'Save changes'}
         </button>
       </div>
 
       {/* Photos */}
       <div>
         <p className={labelClass}>Photos</p>
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-3 gap-2.5 mt-2">
           {photos.map((photo) => (
-            <div key={photo.id} className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-charcoal-800">
-              <Image src={getPhotoUrl(photo.storage_path)} alt="Photo" fill className="object-cover" />
+            <div key={photo.id} className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#221810]">
+              <img src={getPhotoUrl(photo.storage_path)} alt="Photo" className="absolute inset-0 w-full h-full object-cover" />
               <button
                 type="button"
                 onClick={() => handleDeletePhoto(photo)}
@@ -228,7 +250,7 @@ export default function ProfilePage() {
                 ) : '✕'}
               </button>
               {photo.display_order === 0 && (
-                <span className="absolute bottom-2 left-2 text-[10px] bg-ember-500/90 rounded-md px-1.5 py-0.5 font-semibold tracking-wide">
+                <span className="absolute bottom-2 left-2 text-[10px] bg-[#C8553D] rounded-md px-1.5 py-0.5 font-semibold tracking-wide text-white">
                   MAIN
                 </span>
               )}
@@ -240,16 +262,16 @@ export default function ProfilePage() {
               type="button"
               onClick={() => inputRef.current?.click()}
               disabled={addingPhoto}
-              className="aspect-[3/4] rounded-2xl border-2 border-dashed border-ember-800/50 flex flex-col items-center justify-center gap-1.5 text-ember-200/30 hover:border-ember-700 hover:text-ember-200/50 disabled:pointer-events-none transition-colors"
+              className="aspect-[3/4] rounded-2xl border-2 border-dashed border-[#2A0A03] flex flex-col items-center justify-center gap-1.5 text-[#4A1208] hover:border-[#4A1208] hover:text-[#8A6858] disabled:pointer-events-none transition-colors"
             >
               {addingPhoto ? (
-                <div className="w-5 h-5 rounded-full border-2 border-ember-400 border-t-transparent animate-spin" />
+                <div className="w-5 h-5 rounded-full border-2 border-[#C8553D] border-t-transparent animate-spin" />
               ) : (
                 <>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                   </svg>
-                  <span className="text-[11px] font-medium">Add</span>
+                  <span className="text-xs font-medium">Add</span>
                 </>
               )}
             </button>

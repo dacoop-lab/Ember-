@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
@@ -71,7 +71,7 @@ export default function OnboardingPhotosPage() {
   return (
     <div className="flex flex-col flex-1 gap-6">
       <div>
-        <h2 className="text-2xl font-semibold text-ember-50">Add your photos</h2>
+        <h2 className="text-2xl font-semibold text-[#F5E6DC]">Add your photos</h2>
         <p className="mt-1 text-sm text-ember-200/50">
           Up to {MAX_PHOTOS} photos. First one is your profile photo.
         </p>
@@ -82,7 +82,7 @@ export default function OnboardingPhotosPage() {
         {Array.from({ length: MAX_PHOTOS }).map((_, i) => {
           const photo = photos[i]
           return photo ? (
-            <div key={i} className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-charcoal-800">
+            <div key={i} className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#1A1410]">
               <Image src={photo.url} alt={`Photo ${i + 1}`} fill className="object-cover" />
               <button
                 type="button"
@@ -130,7 +130,8 @@ export default function OnboardingPhotosPage() {
         <button
           onClick={handleContinue}
           disabled={uploading || photos.length === 0}
-          className="w-full rounded-xl bg-ember-500 py-3.5 text-sm font-semibold text-white tracking-wide hover:bg-ember-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-xl py-4 text-base font-semibold text-white tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
+          style={{ background: 'linear-gradient(to right, #C8553D, #E8845C)' }}
         >
           {uploading ? 'Uploading…' : 'Continue'}
         </button>

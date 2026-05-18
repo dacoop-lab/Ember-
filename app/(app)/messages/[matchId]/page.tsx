@@ -15,8 +15,8 @@ interface OtherUser {
 function HeaderSkeleton() {
   return (
     <div className="flex items-center justify-center gap-2.5 py-3 px-4 border-b border-ember-900/60">
-      <div className="w-8 h-8 rounded-full bg-charcoal-800 animate-pulse" />
-      <div className="h-3.5 w-24 bg-charcoal-800 animate-pulse rounded-full" />
+      <div className="w-8 h-8 rounded-full bg-[#1A1410] animate-pulse" />
+      <div className="h-3.5 w-24 bg-[#1A1410] animate-pulse rounded-full" />
     </div>
   )
 }
@@ -26,7 +26,7 @@ function MessagesSkeleton() {
     <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
       {[false, true, false, true, false].map((own, i) => (
         <div key={i} className={`flex ${own ? 'justify-end' : 'justify-start'}`}>
-          <div className={`h-9 rounded-2xl bg-charcoal-800 animate-pulse ${own ? 'w-36' : 'w-48'}`} />
+          <div className={`h-9 rounded-2xl bg-[#1A1410] animate-pulse ${own ? 'w-36' : 'w-48'}`} />
         </div>
       ))}
     </div>
@@ -151,12 +151,12 @@ export default function ChatPage() {
 
   return (
     <div
-      className="flex flex-col bg-charcoal-900"
+      className="flex flex-col bg-[#0D0A08]"
       style={{ height: 'calc(100dvh - var(--nav-height))' }}
     >
       {/* Header */}
       <div
-        className="relative flex items-center justify-center shrink-0 pb-3 px-14 border-b border-ember-900/60 bg-charcoal-900"
+        className="relative flex items-center justify-center shrink-0 pb-3 px-14 border-b border-ember-900/60 bg-[#0D0A08]"
         style={{ paddingTop: 'max(48px, var(--safe-top))' }}
       >
         <Link
@@ -173,14 +173,14 @@ export default function ChatPage() {
           <HeaderSkeleton />
         ) : other ? (
           <div className="flex flex-col items-center gap-1.5">
-            <div className="w-9 h-9 rounded-full overflow-hidden bg-charcoal-800 shrink-0">
+            <div className="w-9 h-9 rounded-full overflow-hidden bg-[#1A1410] shrink-0">
               {other.photoUrl ? (
                 <img src={other.photoUrl} alt={other.profile.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-ember-200/20 text-sm">♥</div>
               )}
             </div>
-            <p className="text-sm font-semibold text-ember-50 leading-none">{other.profile.name}</p>
+            <p className="text-sm font-semibold text-[#F5E6DC] leading-none">{other.profile.name}</p>
           </div>
         ) : null}
       </div>
@@ -210,7 +210,7 @@ export default function ChatPage() {
                   className={`max-w-[75%] px-4 py-2.5 text-sm leading-relaxed break-words ${
                     isOwn
                       ? 'bg-ember-500 text-white rounded-2xl rounded-br-sm'
-                      : 'bg-charcoal-800 text-ember-50 rounded-2xl rounded-bl-sm'
+                      : 'bg-[#1A1410] text-[#F5E6DC] rounded-2xl rounded-bl-sm'
                   }`}
                 >
                   {msg.content}
@@ -225,7 +225,7 @@ export default function ChatPage() {
       {/* Input bar */}
       <form
         onSubmit={handleSend}
-        className="shrink-0 flex items-center gap-3 px-4 py-3 border-t border-ember-900/60 bg-charcoal-900"
+        className="shrink-0 flex items-center gap-3 px-4 py-3 border-t border-ember-900/60 bg-[#0D0A08]"
       >
         <input
           ref={inputRef}
@@ -234,7 +234,7 @@ export default function ChatPage() {
           onChange={(e) => setText(e.target.value)}
           placeholder="Message…"
           autoComplete="off"
-          className="flex-1 rounded-full bg-charcoal-800 border border-ember-800/40 px-4 py-3 text-sm text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+          className="flex-1 rounded-full bg-[#1A1410] border border-ember-800/40 px-4 py-3 text-sm text-[#F5E6DC] placeholder:text-[#F5E6DC]/20 focus:outline-none focus:border-ember-500 transition-colors"
         />
         <button
           type="submit"

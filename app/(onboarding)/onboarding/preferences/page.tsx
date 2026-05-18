@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -60,7 +60,7 @@ export default function OnboardingPreferencesPage() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col flex-1 gap-6">
       <div>
-        <h2 className="text-2xl font-semibold text-ember-50">Your preferences</h2>
+        <h2 className="text-2xl font-semibold text-[#F5E6DC]">Your preferences</h2>
         <p className="mt-1 text-sm text-ember-200/50">You can always change these later.</p>
       </div>
 
@@ -80,7 +80,7 @@ export default function OnboardingPreferencesPage() {
                 className={`rounded-xl border px-4 py-3.5 text-base font-medium transition-all flex items-center justify-between gap-2 ${
                   active
                     ? 'border-ember-400 bg-ember-900/40 text-ember-100'
-                    : 'border-ember-800/50 bg-charcoal-800 text-ember-200/70 hover:border-ember-700'
+                    : 'border-ember-800/50 bg-[#1A1410] text-ember-200/70 hover:border-ember-700'
                 }`}
               >
                 <span>{opt.label}</span>
@@ -100,7 +100,7 @@ export default function OnboardingPreferencesPage() {
         <p className="text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-3">
           Age range
         </p>
-        <div className="bg-charcoal-800 rounded-2xl px-4 py-4 space-y-4">
+        <div className="bg-[#1A1410] rounded-2xl px-4 py-4 space-y-4">
           <div>
             <div className="flex justify-between text-xs text-ember-200/50 mb-2">
               <span>Minimum</span>
@@ -143,7 +143,7 @@ export default function OnboardingPreferencesPage() {
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="w-full rounded-xl bg-charcoal-800 border border-ember-800/50 px-4 py-3.5 text-base text-ember-50 placeholder:text-ember-50/20 focus:outline-none focus:border-ember-500 transition-colors"
+          className="w-full rounded-xl bg-[#1A1410] border border-ember-800/50 px-4 py-3.5 text-base text-[#F5E6DC] placeholder:text-[#F5E6DC]/20 focus:outline-none focus:border-ember-500 transition-colors"
           placeholder="Where are you based?"
         />
       </div>
@@ -154,7 +154,8 @@ export default function OnboardingPreferencesPage() {
         <button
           type="submit"
           disabled={loading || seeking.length === 0}
-          className="w-full rounded-xl bg-ember-500 py-4 text-base font-semibold text-white tracking-wide hover:bg-ember-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-xl py-4 text-base font-semibold text-white tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
+          style={{ background: 'linear-gradient(to right, #C8553D, #E8845C)' }}
         >
           {loading ? 'Finishing…' : 'Start discovering'}
         </button>

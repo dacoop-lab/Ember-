@@ -27,6 +27,11 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
       className="flex flex-col min-h-dvh w-full px-6"
       style={{ paddingTop: 'max(48px, var(--safe-top))' }}
     >
+      {/* Logo */}
+      <div className="flex justify-center pt-2 pb-4 shrink-0">
+        <img src="/logo-clean.png" alt="Ember" className="h-8 w-auto" />
+      </div>
+
       {/* Top bar */}
       <div className="pb-6 flex items-center gap-4 shrink-0">
         {backHref ? (
@@ -53,13 +58,15 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
               <div key={step.path} className="flex items-center flex-1 last:flex-none">
                 <div className="flex flex-col items-center gap-1">
                   <div
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      isCompleted ? 'bg-ember-600' : isActive ? 'bg-ember-400' : 'bg-ember-900'
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                      isCompleted ? 'bg-[#8A2E1C]'
+                      : isActive   ? 'bg-[#C8553D]'
+                      :              'bg-[#2A0A03] border border-[#4A1208]'
                     }`}
                   />
                   <span
                     className={`text-xs font-medium whitespace-nowrap transition-colors ${
-                      isCompleted ? 'text-ember-600' : isActive ? 'text-ember-400' : 'text-ember-900'
+                      isCompleted ? 'text-[#8A2E1C]' : isActive ? 'text-[#C8553D]' : 'text-[#2A0A03]'
                     }`}
                   >
                     {step.label}
@@ -69,7 +76,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
                 {i < STEPS.length - 1 && (
                   <div
                     className={`h-px flex-1 mx-1.5 mb-4 transition-colors ${
-                      i < currentIndex ? 'bg-ember-600' : 'bg-ember-900'
+                      i < currentIndex ? 'bg-[#8A2E1C]' : 'bg-[#2A0A03]'
                     }`}
                   />
                 )}

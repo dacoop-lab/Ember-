@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import type { Identity, Gender } from '@/types/database'
 
-const identities: { value: Identity; label: string; sub: string }[] = [
-  { value: 'redhead', label: "I'm a Redhead",       sub: 'Natural or dyed — own it' },
-  { value: 'admirer', label: 'I Admire Redheads',   sub: 'Drawn to that rare flame' },
+const identities: { value: Identity; label: string; sub: string; emoji: string }[] = [
+  { value: 'redhead', label: "I'm a Redhead",     sub: 'Natural or dyed — own it',    emoji: '🔥' },
+  { value: 'admirer', label: 'I Admire Redheads', sub: 'Drawn to that rare flame',    emoji: '❤️' },
 ]
 
 const genders: { value: Gender; label: string }[] = [
@@ -51,11 +51,11 @@ export default function OnboardingIdentityPage() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col flex-1 gap-6">
       <div>
-        <h2 className="text-2xl font-semibold text-ember-50">How do you identify?</h2>
-        <p className="mt-1 text-sm text-ember-200/50">This helps us show you the right matches.</p>
+        <h2 className="text-2xl font-semibold text-[#F5E6DC]">How do you identify?</h2>
+        <p className="mt-1 text-sm text-[#8A6858]">This helps us show you the right matches.</p>
       </div>
 
-      {/* Identity cards */}
+      {/* Identity cards with emoji */}
       <div className="flex flex-col gap-3">
         {identities.map((opt) => {
           const active = identity === opt.value
@@ -64,31 +64,17 @@ export default function OnboardingIdentityPage() {
               key={opt.value}
               type="button"
               onClick={() => setIdentity(opt.value)}
-              className={`w-full rounded-2xl border p-5 text-left transition-all ${
+              className={`w-full rounded-2xl border p-6 text-center transition-all ${
                 active
-                  ? 'border-ember-400 bg-ember-900/40 shadow-[0_0_0_1px] shadow-ember-400/20'
-                  : 'border-ember-800/50 bg-charcoal-800 hover:border-ember-700'
+                  ? 'border-[#C8553D] bg-[#2A0A03]/60'
+                  : 'border-[#2A0A03] bg-[#1A1410] hover:border-[#4A1208]'
               }`}
             >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className={`font-semibold ${active ? 'text-ember-100' : 'text-ember-50'}`}>
-                    {opt.label}
-                  </p>
-                  <p className="text-xs text-ember-200/50 mt-0.5">{opt.sub}</p>
-                </div>
-                <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-                    active ? 'border-ember-400 bg-ember-400' : 'border-ember-700'
-                  }`}
-                >
-                  {active && (
-                    <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3">
-                      <path d="M2 6l3 3 5-5" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
-                </div>
-              </div>
+              <div className="text-3xl mb-3">{opt.emoji}</div>
+              <p className={`font-semibold text-lg ${active ? 'text-[#F5E6DC]' : 'text-[#C4A898]'}`}>
+                {opt.label}
+              </p>
+              <p className="text-sm text-[#8A6858] mt-1">{opt.sub}</p>
             </button>
           )
         })}
@@ -96,7 +82,7 @@ export default function OnboardingIdentityPage() {
 
       {/* Gender */}
       <div>
-        <p className="text-sm font-medium tracking-widest uppercase text-ember-200/60 mb-3">Gender</p>
+        <p className="text-sm font-medium tracking-widest uppercase text-[#8A6858] mb-3">Gender</p>
         <div className="grid grid-cols-2 gap-2.5">
           {genders.map((opt) => (
             <button
@@ -105,8 +91,8 @@ export default function OnboardingIdentityPage() {
               onClick={() => setGender(opt.value)}
               className={`rounded-xl border px-4 py-3.5 text-base font-medium transition-all ${
                 gender === opt.value
-                  ? 'border-ember-400 bg-ember-900/40 text-ember-100'
-                  : 'border-ember-800/50 bg-charcoal-800 text-ember-200/70 hover:border-ember-700'
+                  ? 'border-[#C8553D] bg-[#2A0A03]/60 text-[#F5E6DC]'
+                  : 'border-[#2A0A03] bg-[#1A1410] text-[#8A6858] hover:border-[#4A1208]'
               }`}
             >
               {opt.label}
@@ -121,7 +107,8 @@ export default function OnboardingIdentityPage() {
         <button
           type="submit"
           disabled={loading || !identity || !gender}
-          className="w-full rounded-xl bg-ember-500 py-4 text-base font-semibold text-white tracking-wide hover:bg-ember-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-xl py-4 text-base font-semibold text-white tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
+          style={{ background: 'linear-gradient(to right, #C8553D, #E8845C)' }}
         >
           {loading ? 'Saving…' : 'Continue'}
         </button>
