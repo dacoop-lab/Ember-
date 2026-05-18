@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { updateProfile } from '@/app/actions/updateProfile'
 
 export default function OnboardingProfilePage() {
   const router = useRouter()
@@ -40,17 +41,15 @@ export default function OnboardingProfilePage() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { router.push('/login'); return }
 
-    const { error: updateError } = await supabase
-      .from('profiles')
-      .update({
-        name: name.trim(),
-        age: parseInt(age),
-        bio: bio.trim() || null,
-      })
-      .eq('id', user.id)
+    const { error: updateError } = await updateProfile(
+      user.id,
+      name.trim(),
+      age ? parseInt(age) : null,
+      bio.trim() || null,
+    )
 
     if (updateError) {
-      setError(updateError.message)
+      setError(updateError)
       setLoading(false)
       return
     }
