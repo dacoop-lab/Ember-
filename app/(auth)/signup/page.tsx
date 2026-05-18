@@ -32,10 +32,22 @@ export default function SignupPage() {
     }
 
     if (data.user) {
-      const { error: profileError } = await createProfile(data.user.id, name)
+      // Wait for Supabase auth session to fully propagate before the service role insert
+      await new Promise((resolve) => setTimeout(resolve, 1000))
 
-      if (profileError) {
-        setError(profileError)
+      try {
+        const clientTimeout = new Promise<{ error: string }>(
+          (resolve) => setTimeout(() => resolve({ error: 'Something went wrong, please try again.' }), 10_000),
+        )
+        const result = await Promise.race([createProfile(data.user.id, name), clientTimeout])
+
+        if (result.error) {
+          setError(result.error)
+          setLoading(false)
+          return
+        }
+      } catch {
+        setError('Something went wrong, please try again.')
         setLoading(false)
         return
       }
